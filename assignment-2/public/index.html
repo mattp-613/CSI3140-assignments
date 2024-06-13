@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yatzy Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game">
+        <h1>Yatzy Game</h1>
+        <div id="dice-container">
+            <div class="die" id="die1">1</div>
+            <div class="die" id="die2">2</div>
+            <div class="die" id="die3">3</div>
+            <div class="die" id="die4">4</div>
+            <div class="die" id="die5">5</div>
+        </div>
+        <button id="roll-button">Roll</button>
+        <div id="scoreboard">
+            <h2>Scoreboard</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Aces</td>
+                        <td id="score-aces">0</td>
+                    </tr>
+                    <tr>
+                        <td>Twos</td>
+                        <td id="score-twos">0</td>
+                    </tr>
+                    <tr>
+                        <td>Threes</td>
+                        <td id="score-threes">0</td>
+                    </tr>
+                    <tr>
+                        <td>Fours</td>
+                        <td id="score-fours">0</td>
+                    </tr>
+                    <tr>
+                        <td>Fives</td>
+                        <td id="score-fives">0</td>
+                    </tr>
+                    <tr>
+                        <td>Sixes</td>
+                        <td id="score-sixes">0</td>
+                    </tr>
+                    <tr>
+                        <td>Three of a kind</td>
+                        <td id="score-three-kind">0</td>
+                    </tr>
+                    <tr>
+                        <td>Four of a kind</td>
+                        <td id="score-four-kind">0</td>
+                    </tr>
+                    <tr>
+                        <td>Full House</td>
+                        <td id="score-full-house">0</td>
+                    </tr>
+                    <tr>
+                        <td>Small Straight</td>
+                        <td id="score-small-straight">0</td>
+                    </tr>
+                    <tr>
+                        <td>Large Straight</td>
+                        <td id="score-large-straight">0</td>
+                    </tr>
+                    <tr>
+                        <td>Yatzy</td>
+                        <td id="score-yatzy">0</td>
+                    </tr>
+                    <tr>
+                        <td>Chance</td>
+                        <td id="score-chance">0</td>
+                    </tr>
+                    <tr>
+                        <td>Total</td>
+                        <td id="score-total">0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
