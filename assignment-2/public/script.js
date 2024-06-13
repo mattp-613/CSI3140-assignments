@@ -80,38 +80,26 @@ function calculateScoreForCategory(category) {  //TODO: Fix full house, straight
             return counts[4] * 5;
         case 'sixes':
             return counts[5] * 6;
-        case 'three of a kind':
+        case 'three of a kind': //TODO: add only the three of a kind
             for (let i = 0; i < 6; i++) {
                 if (counts[i] >= 3) {
                     return diceValues.reduce((sum, value) => sum + value, 0);
                 }
             }
             return 0;
-        case 'four of a kind':
+        case 'four of a kind': //TODO: add only the four of a kind
             for (let i = 0; i < 6; i++) {
                 if (counts[i] >= 4) {
                     return diceValues.reduce((sum, value) => sum + value, 0);
                 }
             }
             return 0;
-        case 'full house':
-            if (counts.includes(3) && counts.includes(2)) {
+            case 'full house': // DO THIS
                 return 25;
-            }
-            return 0;
-        case 'small straight':
-            if ((counts.slice(0, 4).every(count => count > 0)) ||
-                (counts.slice(1, 5).every(count => count > 0)) ||
-                (counts.slice(2, 6).every(count => count > 0))) {
+            case 'small straight': // DO THIS
                 return 30;
-            }
-            return 0;
-        case 'large straight':
-            if ((counts.slice(0, 5).every(count => count > 0)) ||
-                (counts.slice(1, 6).every(count => count > 0))) {
+            case 'large straight': // DO THIS
                 return 40;
-            }
-            return 0;
         case 'yatzy':
             if (counts.includes(5)) {
                 return 50;
