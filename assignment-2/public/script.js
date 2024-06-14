@@ -81,17 +81,17 @@ function calculateScoreForCategory(category) {
             return counts[4] * 5;
         case 'sixes':
             return counts[5] * 6;
-        case 'three of a kind': //TODO: add only the three of a kind, and not any other number
+        case 'three of a kind':
             for (let i = 0; i < 6; i++) {
                 if (counts[i] >= 3) {
-                    return diceValues.reduce((sum, value) => sum + value, 0);
+                    return (i + 1) * 3;
                 }
             }
             return 0;
-        case 'four of a kind': //TODO: add only the four of a kind, and not any other number
+        case 'four of a kind':
             for (let i = 0; i < 6; i++) {
                 if (counts[i] >= 4) {
-                    return diceValues.reduce((sum, value) => sum + value, 0);
+                    return (i + 1) * 4;
                 }
             }
             return 0;
@@ -104,7 +104,6 @@ function calculateScoreForCategory(category) {
             if ((counts[0] >= 1 && counts[1] >= 1 && counts[2] >= 1 && counts[3] >= 1) ||
                 (counts[1] >= 1 && counts[2] >= 1 && counts[3] >= 1 && counts[4] >= 1) ||
                 (counts[2] >= 1 && counts[3] >= 1 && counts[4] >= 1 && counts[5] >= 1)) {
-                    
                 return 30;
             }
             return 0;
