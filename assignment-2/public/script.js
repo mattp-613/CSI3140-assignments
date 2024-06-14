@@ -5,10 +5,11 @@ const resetButton = document.getElementById('reset-button');
 const scoreCategories = document.querySelectorAll('.score-category');
 
 let rollCount = 0;
+let rollMax = 99; //set amount of rolls here
 let heldDice = [false, false, false, false, false];
 
 function rollDice() {
-    if (rollCount < 3) {
+    if (rollCount < rollMax) {
         dice.forEach((die, index) => {
             if (!heldDice[index]) {
                 const roll = Math.floor(Math.random() * 6) + 1;
@@ -47,7 +48,7 @@ function calculateTotalScore() {
     document.getElementById('score-total').textContent = total;
 }
 
-function setScores() { //TODO!!!! Make it so u click a category to add the score
+function setScores() {
     const selectedCategory = prompt("Enter the category to set the score:");
     if (selectedCategory) {
         const score = calculateScoreForCategory(selectedCategory);
@@ -59,7 +60,7 @@ function setScores() { //TODO!!!! Make it so u click a category to add the score
     }
 }
 
-function calculateScoreForCategory(category) {  //TODO: Fix full house, straights, etc...
+function calculateScoreForCategory(category) {
     const diceValues = dice.map(die => parseInt(die.textContent));
     const counts = [0, 0, 0, 0, 0, 0];
     
@@ -80,26 +81,39 @@ function calculateScoreForCategory(category) {  //TODO: Fix full house, straight
             return counts[4] * 5;
         case 'sixes':
             return counts[5] * 6;
-        case 'three of a kind': //TODO: add only the three of a kind
+        case 'three of a kind': //TODO: add only the three of a kind, and not any other number
             for (let i = 0; i < 6; i++) {
                 if (counts[i] >= 3) {
                     return diceValues.reduce((sum, value) => sum + value, 0);
                 }
             }
             return 0;
-        case 'four of a kind': //TODO: add only the four of a kind
+        case 'four of a kind': //TODO: add only the four of a kind, and not any other number
             for (let i = 0; i < 6; i++) {
                 if (counts[i] >= 4) {
                     return diceValues.reduce((sum, value) => sum + value, 0);
                 }
             }
             return 0;
-            case 'full house': // DO THIS
+        case 'full house':
+            if (counts.includes(3) && counts.includes(2)) {
                 return 25;
-            case 'small straight': // DO THIS
+            }
+            return 0;
+        case 'small straight':
+            if ((counts[0] >= 1 && counts[1] >= 1 && counts[2] >= 1 && counts[3] >= 1) ||
+                (counts[1] >= 1 && counts[2] >= 1 && counts[3] >= 1 && counts[4] >= 1) ||
+                (counts[2] >= 1 && counts[3] >= 1 && counts[4] >= 1 && counts[5] >= 1)) {
+                    
                 return 30;
-            case 'large straight': // DO THIS
+            }
+            return 0;
+        case 'large straight':
+            if ( (counts[1] >= 1 && counts[2] >= 1 && counts[3] >= 1 && counts[4] >= 1 && counts[5] >= 1) ||
+                 (counts[0] >= 1 && counts[1] >= 1 && counts[2] >= 1 && counts[3] >= 1 && counts[4] >= 1) ) {
                 return 40;
+            }
+            return 0;
         case 'yatzy':
             if (counts.includes(5)) {
                 return 50;
