@@ -10,7 +10,7 @@ Clicking the roll button randomly assigns values between 1 and 6 to the dice. Af
 ![Figure](docs/design_system/image-1.png)
 
 
-You have up to three rolls before clicking the set scores button to assign the dice to a chosen scoring category (e.g., Aces) on the scoreboard, which also updates the total score accordingly. 
+You have up to two rolls before clicking the set scores button to assign the dice to a chosen scoring category (e.g., Aces) on the scoreboard, which also updates the total score accordingly. 
 
 ![Figure](docs/design_system/image-3.png)
 ![Figure](docs/design_system/image-4.png)
