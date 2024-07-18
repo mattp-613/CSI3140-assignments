@@ -62,6 +62,71 @@ function setScores() {
     }
 }
 
+function calculateScoreForCategory(category) {
+    const diceValues = dice.map(die => parseInt(die.textContent));
+    const counts = [0, 0, 0, 0, 0, 0];
+    
+    diceValues.forEach(value => {
+        counts[value - 1]++;
+    });
+
+    switch (category) {
+        case 'aces':
+            return counts[0] * 1;
+        case 'twos':
+            return counts[1] * 2;
+        case 'threes':
+            return counts[2] * 3;
+        case 'fours':
+            return counts[3] * 4;
+        case 'fives':
+            return counts[4] * 5;
+        case 'sixes':
+            return counts[5] * 6;
+        case 'three of a kind':
+            for (let i = 0; i < 6; i++) {
+                if (counts[i] >= 3) {
+                    return diceValues.reduce((sum, value) => sum + value, 0);
+                }
+            }
+            return 0;
+        case 'four of a kind':
+            for (let i = 0; i < 6; i++) {
+                if (counts[i] >= 4) {
+                    return diceValues.reduce((sum, value) => sum + value, 0);
+                }
+            }
+            return 0;
+        case 'full house':
+            if (counts.includes(3) && counts.includes(2)) {
+                return 25;
+            }
+            return 0;
+        case 'small straight':
+            if ((counts[0] >= 1 && counts[1] >= 1 && counts[2] >= 1 && counts[3] >= 1) ||
+                (counts[1] >= 1 && counts[2] >= 1 && counts[3] >= 1 && counts[4] >= 1) ||
+                (counts[2] >= 1 && counts[3] >= 1 && counts[4] >= 1 && counts[5] >= 1)) {
+                return 30;
+            }
+            return 0;
+        case 'large straight':
+            if ((counts[1] >= 1 && counts[2] >= 1 && counts[3] >= 1 && counts[4] >= 1 && counts[5] >= 1) ||
+                (counts[0] >= 1 && counts[1] >= 1 && counts[2] >= 1 && counts[3] >= 1 && counts[4] >= 1)) {
+                return 40;
+            }
+            return 0;
+        case 'yatzy':
+            if (counts.includes(5)) {
+                return 50;
+            }
+            return 0;
+        case 'chance':
+            return diceValues.reduce((sum, value) => sum + value, 0);
+        default:
+            return null;
+    }
+}
+
 // Initialize event listeners
 dice.forEach(die => die.addEventListener('click', toggleHold));
 rollButton.addEventListener('click', rollDice);
