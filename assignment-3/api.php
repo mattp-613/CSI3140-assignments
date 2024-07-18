@@ -65,9 +65,33 @@ switch ($action) {
         }
         break;
 
+    case 'resetGame':
+        $_SESSION['gameState'] = [
+            'rollCount' => 0,
+            'heldDice' => [false, false, false, false, false],
+            'diceValues' => [1, 2, 3, 4, 5],
+            'scores' => [
+                'aces' => 0,
+                'twos' => 0,
+                'threes' => 0,
+                'fours' => 0,
+                'fives' => 0,
+                'sixes' => 0,
+                'three of a kind' => 0,
+                'four of a kind' => 0,
+                'full house' => 0,
+                'small straight' => 0,
+                'large straight' => 0,
+                'yatzy' => 0,
+                'chance' => 0,
+            ],
+            'totalScore' => 0,
+            'leaderboard' => []
+        ];
+        break;
+        
     case 'getGameState':
     default:
-        // Default action is to return the game state
         break;
 }
 

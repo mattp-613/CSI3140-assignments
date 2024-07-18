@@ -3,6 +3,12 @@ const rollButton = document.getElementById('roll-button');
 const setButton = document.getElementById('set-button');
 const resetButton = document.getElementById('reset-button');
 const scoreCategories = document.querySelectorAll('.score-category');
+const resetGameButton = document.getElementById('reset-game-button');
+
+function resetGame() {
+    fetch('api.php?action=resetGame')
+        .then(fetchGameState);
+}
 
 function fetchGameState() {
     fetch('api.php?action=getGameState')
@@ -127,11 +133,11 @@ function calculateScoreForCategory(category) {
     }
 }
 
-// Initialize event listeners
 dice.forEach(die => die.addEventListener('click', toggleHold));
 rollButton.addEventListener('click', rollDice);
 setButton.addEventListener('click', setScores);
 resetButton.addEventListener('click', resetRoll);
+resetGameButton.addEventListener('click', resetGame);
 
-// Fetch initial game state
+
 fetchGameState();
