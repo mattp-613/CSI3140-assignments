@@ -5,6 +5,7 @@ const resetButton = document.getElementById('reset-button');
 const scoreCategories = document.querySelectorAll('.score-category');
 const resetGameButton = document.getElementById('reset-game-button');
 
+
 function resetGame() {
     fetch('api.php?action=resetGame')
         .then(fetchGameState);
@@ -26,6 +27,22 @@ function updateUI(gameState) {
     for (const category in gameState.scores) {
         document.getElementById(`score-${category}`).textContent = gameState.scores[category];
     }
+    updateLeaderboard(gameState.leaderboard);
+}
+
+function updateLeaderboard(leaderboard) {
+    const leaderboardTable = document.getElementById('leaderboard-table');
+    leaderboardTable.innerHTML = ''; 
+    leaderboard.forEach((score, index) => {
+        const row = document.createElement('tr');
+        const rankCell = document.createElement('td');
+        rankCell.textContent = index + 1;
+        const scoreCell = document.createElement('td');
+        scoreCell.textContent = score;
+        row.appendChild(rankCell);
+        row.appendChild(scoreCell);
+        leaderboardTable.appendChild(row);
+    });
 }
 
 function rollDice() {
