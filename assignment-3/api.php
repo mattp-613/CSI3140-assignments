@@ -1,12 +1,11 @@
 <?php
 session_start();
 
-// Initialize the game state if not already set
-if (!isset($_SESSION['game_state'])) {
-    $_SESSION['game_state'] = [
-        'dice' => [1, 2, 3, 4, 5],
+if (!isset($_SESSION['gameState'])) {
+    $_SESSION['gameState'] = [
         'rollCount' => 0,
         'heldDice' => [false, false, false, false, false],
+        'diceValues' => [1, 2, 3, 4, 5],
         'scores' => [
             'aces' => 0,
             'twos' => 0,
@@ -21,72 +20,54 @@ if (!isset($_SESSION['game_state'])) {
             'large straight' => 0,
             'yatzy' => 0,
             'chance' => 0,
-            'total' => 0,
         ],
+        'totalScore' => 0,
         'leaderboard' => []
     ];
 }
 
-$action = $_POST['action'] ?? null;
+header('Content-Type: application/json');
+
+$action = $_GET['action'] ?? null;
 
 switch ($action) {
     case 'roll':
-        rollDice();
-        break;
-    case 'set_scores':
-        setScores($_POST['category'], $_POST['score']);
-        break;
-    case 'reset':
-        resetGame();
-        break;
-    default:
-        break;
-}
-
-echo json_encode($_SESSION['game_state']);
-
-function rollDice() {
-    if ($_SESSION['game_state']['rollCount'] < 3) {
-        for ($i = 0; $i < 5; $i++) {
-            if (!$_SESSION['game_state']['heldDice'][$i]) {
-                $_SESSION['game_state']['dice'][$i] = rand(1, 6);
+        if ($_SESSION['gameState']['rollCount'] < 2) {
+            foreach ($_SESSION['gameState']['diceValues'] as $index => $value) {
+                if (!$_SESSION['gameState']['heldDice'][$index]) {
+                    $_SESSION['gameState']['diceValues'][$index] = rand(1, 6);
+                }
             }
+            $_SESSION['gameState']['rollCount']++;
         }
-        $_SESSION['game_state']['rollCount']++;
-    }
+        break;
+
+    case 'hold':
+        $index = $_POST['index'] ?? null;
+        if ($index !== null && $index >= 0 && $index < 5) {
+            $_SESSION['gameState']['heldDice'][$index] = !$_SESSION['gameState']['heldDice'][$index];
+        }
+        break;
+
+    case 'reset':
+        $_SESSION['gameState']['rollCount'] = 0;
+        $_SESSION['gameState']['heldDice'] = [false, false, false, false, false];
+        $_SESSION['gameState']['diceValues'] = [1, 2, 3, 4, 5];
+        break;
+
+    case 'setScore':
+        $category = $_POST['category'] ?? null;
+        $score = $_POST['score'] ?? null;
+        if ($category && $score !== null) {
+            $_SESSION['gameState']['scores'][$category] = (int)$score;
+            $_SESSION['gameState']['totalScore'] = array_sum($_SESSION['gameState']['scores']);
+        }
+        break;
+
+    case 'getGameState':
+    default:
+        // Default action is to return the game state
+        break;
 }
 
-function setScores($category, $score) {
-    $_SESSION['game_state']['scores'][$category] = $score;
-    calculateTotalScore();
-}
-
-function calculateTotalScore() {
-    $_SESSION['game_state']['scores']['total'] = array_sum($_SESSION['game_state']['scores']);
-}
-
-function resetGame() {
-    $_SESSION['game_state'] = [
-        'dice' => [1, 2, 3, 4, 5],
-        'rollCount' => 0,
-        'heldDice' => [false, false, false, false, false],
-        'scores' => [
-            'aces' => 0,
-            'twos' => 0,
-            'threes' => 0,
-            'fours' => 0,
-            'fives' => 0,
-            'sixes' => 0,
-            'three of a kind' => 0,
-            'four of a kind' => 0,
-            'full house' => 0,
-            'small straight' => 0,
-            'large straight' => 0,
-            'yatzy' => 0,
-            'chance' => 0,
-            'total' => 0,
-        ],
-        'leaderboard' => []
-    ];
-}
-?>
+echo json_encode($_SESSION['gameState']);
