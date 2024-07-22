@@ -62,6 +62,19 @@ switch ($action) {
         if ($category && $score !== null) {
             $_SESSION['gameState']['scores'][$category] = (int)$score;
             $_SESSION['gameState']['totalScore'] = array_sum($_SESSION['gameState']['scores']);
+
+            $allCategoriesFilled = true;
+            foreach ($_SESSION['gameState']['scores'] as $scoreValue) {
+                if ($scoreValue === 0) {
+                    $allCategoriesFilled = false;
+                    break;
+                }
+            }
+            if ($allCategoriesFilled) {
+                $_SESSION['gameState']['leaderboard'][] = $_SESSION['gameState']['totalScore'];
+                rsort($_SESSION['gameState']['leaderboard']); 
+                $_SESSION['gameState']['leaderboard'] = array_slice($_SESSION['gameState']['leaderboard'], 0, 10); 
+            }
         }
         break;
 
@@ -86,7 +99,7 @@ switch ($action) {
                 'chance' => 0,
             ],
             'totalScore' => 0,
-            'leaderboard' => []
+            'leaderboard' => $_SESSION['gameState']['leaderboard']
         ];
         break;
         
