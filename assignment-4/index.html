@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Triage Application</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Hospital Triage</h1>
+    </header>
+
+    <main>
+        <section id="admin-section">
+            <h2>Administrator Panel</h2>
+            <form id="add-patient-form">
+                <input type="text" id="patient-name" placeholder="Patient Name" required>
+                <input type="text" id="patient-code" placeholder="3-letter Code" required>
+                <select id="severity" required>
+                    <option value="">Select Severity</option>
+                    <option value="1">Low</option>
+                    <option value="2">Medium</option>
+                    <option value="3">High</option>
+                </select>
+                <button type="submit">Add Patient</button>
+            </form>
+            <h3>Patient List</h3>
+            <ul id="patient-list"></ul>
+        </section>
+
+        <section id="patient-section">
+            <h2>Patient Sign-in</h2>
+            <form id="patient-signin-form">
+                <input type="text" id="signin-name" placeholder="Patient Name" required>
+                <input type="text" id="signin-code" placeholder="3-letter Code" required>
+                <button type="submit">Check Wait Time</button>
+            </form>
+            <div id="wait-time"></div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
