@@ -12,3 +12,15 @@ CREATE TABLE patients (
     time INT NOT NULL DEFAULT 0
 );
 
+ensure to change in api.php and populate.php to a username and password that will have access to this table
+
+Necessities:
+Mariadb, php-mysqli
+
+add new patients:
+php populate_database.php, or manually by php api.php add "John Doe" "XYZ" 2
+check wait time:
+php api.php check "John Doe" "XYZ"
+list all patients:
+php api.php list
+
