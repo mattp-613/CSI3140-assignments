@@ -1,8 +1,35 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const adminLoginForm = document.getElementById('admin-login-form');
     const addPatientForm = document.getElementById('add-patient-form');
     const patientList = document.getElementById('patient-list');
     const signinForm = document.getElementById('patient-signin-form');
     const waitTimeDiv = document.getElementById('wait-time');
+    const loginMessageDiv = document.getElementById('login-message');
+    const adminSection = document.getElementById('admin-section');
+    const loginSection = document.getElementById('login-section');
+
+    adminLoginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const username = document.getElementById('admin-username').value;
+        const password = document.getElementById('admin-password').value;
+
+        fetch('api.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'login', username, password })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                loginSection.style.display = 'none';
+                adminSection.style.display = 'block';
+                loadPatients();
+            } else {
+                loginMessageDiv.innerText = 'Invalid credentials';
+            }
+        });
+    });
 
     addPatientForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -60,6 +87,4 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
-
-    loadPatients();
 });
