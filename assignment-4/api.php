@@ -14,11 +14,11 @@ header('Content-Type: application/json');
 
 $input = json_decode(file_get_contents('php://input'), true);
 
-$adminUsername = "admin";  // Preset admin username
-$adminPassword = "password";  // Preset admin password
+$adminUsername = "admin";  //Edit this to change the admin login username
+$adminPassword = "password";  //Edit this to change the admin password
 
 if (php_sapi_name() == "cli") {
-    //Commands to interface with database
+    //Commands to interface with database via command line interface with the php api
     $action = $argv[1] ?? null;
 
     if ($action === 'add') {
