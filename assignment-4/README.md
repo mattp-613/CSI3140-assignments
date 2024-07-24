@@ -1,3 +1,15 @@
+For patients:
+
+Insert your first name (case sensitive) and your three letter code in full caps to check your estimated wait time.
+
+
+For admins:
+
+Enter in the given admin username and admin password to then access the admin page. The admin page will allow you to add patients and check the list of all patients, their severity, their code, and their estimated wait time.
+
+
+For developers:
+
 Creating the database:
 
 CREATE DATABASE hospital_triage;
